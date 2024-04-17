@@ -1,4 +1,5 @@
 import os
+import re
 from PIL import Image
 
 def find_file_by_suffix(directory, filename_suffix):
@@ -6,6 +7,7 @@ def find_file_by_suffix(directory, filename_suffix):
         for filename in files:
             if filename.endswith(filename_suffix):
                 return os.path.join(root, filename)
+
     return None
 
 def find_full_paths(txt_loc):
@@ -15,17 +17,20 @@ def find_full_paths(txt_loc):
         lines = [line.strip() for line in infile.readlines()]
 
     for line in lines:
-        parts = line.split()
-        filename_suffix = f'{parts[0]} {parts[1]}'
-        file_location = f'color/{data_dirs[int(parts[2]) - 1]}/'
+        parts = re.split(r'(?<=\.JPG)\s*', line)
+        filename_suffix = parts[0]
+        file_location = f'../color/{data_dirs[int(parts[1]) - 1]}/'
         full_path = find_file_by_suffix(file_location, filename_suffix)
         final_paths.append(full_path)
     return final_paths
 
-def load_images(final_paths):
+def load_images(txt_loc):
+    final_paths = find_full_paths(txt_loc)
     images = []
     for path in final_paths:
         image = Image.open(path)
         #image = np.array(image) / 255.0
         images.append(image)
     return images
+
+images = load_images("../test.txt")
