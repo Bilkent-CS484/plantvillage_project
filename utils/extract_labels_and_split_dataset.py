@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-data = pd.read_csv('leaf_mappings.txt')
+data = pd.read_csv('../leaf_mappings.txt')
 
 labels = data['Leaf #'].unique()
 
@@ -36,8 +36,8 @@ def write_data(filename, data):
             file.write(line + "\n")
             prev_prefix = current_prefix
 
-write_data('train.txt', train_data)
-write_data('test.txt', test_data)
+write_data('../train.txt', train_data)
+write_data('../test.txt', test_data)
 
 print("The dataset was split into train.txt and test.txt")
 
@@ -66,7 +66,7 @@ def format_txt(path):
     file.close()
     file2.close()
 
-train_path = "train.txt"
-test_path = "test.txt"
+train_path = "../train.txt"
+test_path = "../test.txt"
 format_txt(train_path)
 format_txt(test_path)
