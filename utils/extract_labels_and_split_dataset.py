@@ -48,9 +48,15 @@ def format_txt(path):
         lines = file.readlines()
 
     i = 1
+    xd = 1
     processed_lines = []
     for line in lines:
         if line.strip():
+            if xd != 64:
+                xd += 1
+                continue
+            else:
+                xd = 1
             commaPos = line.find(",")
             if commaPos != -1:
                 newLine = line[:commaPos] + " " + str(i)
